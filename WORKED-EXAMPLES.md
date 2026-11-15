@@ -1,25 +1,23 @@
-# Worked examples — top-up vault
+# Worked examples — pay-per-use topup
 
-## Example A — enough free
+`COST_PER_CALL = 1_000_000n` (0.01 WAX at precision 8).
 
-freeCredits ≥ need → plan `enough_free`.
+## Shortfall
 
-## Example B — enough paid
+| free | paid | need | paidShortfall |
+| --- | --- | --- | --- |
+| 2 | 0 | 1 | 0 |
+| 0 | 3 | 2 | 0 |
+| 1 | 1 | 4 | 2 |
 
-After free, paid covers gap → `enough_paid`.
+## planTopup
 
-## Example C — shortfall
+Enough free → `enough_free`. Enough paid → `enough_paid`. Empty vault → `vault_empty`.
 
-Need 1, free 0, paid 0, vault ≥ 1_000_000 → plan ok with unsigned transfer amount 1_000_000.
+Vault holds `3 * COST_PER_CALL`, need 1 → ok, `calls` 1, `waxCost` = COST_PER_CALL, unsigned transfer `sent:false`, `to: orng.wax`, memo `deposit`, precision 8.
 
-## Example D — vault empty
+## ensurePaid
 
-Shortfall but vaultWax < waxCost → `vault_empty`.
+Need 2 with vault `5 * COST` → paidCredits 2, vaultWax `3 * COST`, orngPaidWax `2 * COST`.
 
-## Example E — ensurePaid
-
-On ok plan, `applyTopup` moves vault → paidCredits and tracks `orngPaidWax`.
-
-## Example F — consumePaid
-
-Decrements paid by 1 after a successful paid request path.
+`consumePaid` from 1 → 0; second throws. Zero deposit and bad dapp refused.
