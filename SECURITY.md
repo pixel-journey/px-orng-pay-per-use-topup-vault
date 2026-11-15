@@ -1,10 +1,21 @@
-# Security notes — top-up vault
+# Security — pay-per-use topup
 
-| Mitigated | Behavior |
+## Closed in tests
+
+| Issue | Behavior |
 | --- | --- |
-| Bad calls / need | refused |
-| Vault empty | refused |
-| Overflow | refused |
-| Prefer free/paid first | no unnecessary transfer plan |
+| Empty vault topup | vault_empty |
+| Zero deposit | refused |
+| consume without paid | throws |
+| Bad dapp name | refused |
+| Skip when free/paid enough | no transfer planned |
 
-Production: auth on vault moves; confirm oracle credit after real transfer.
+## Not closed
+
+| Concern | Guidance |
+| --- | --- |
+| Custody of vault WAX | Who can withdraw residual |
+| Live deposit memo / account | Match current orng.wax |
+| Partial broadcast | Unsent plan vs actual balance |
+
+No chain broadcast in this repository.
