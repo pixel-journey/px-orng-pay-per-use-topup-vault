@@ -1,23 +1,24 @@
-# Worked examples — pay-per-use topup
+# Worked examples — pay-per-use topup vault
 
-`COST_PER_CALL = 1_000_000n` (0.01 WAX at precision 8).
+`COST_PER_CALL = 1_000_000` (0.01 WAX at precision **8**). Dapp `pxrngdapp`.
 
-## Shortfall
+## paidShortfall
 
-| free | paid | need | paidShortfall |
-| --- | --- | --- | --- |
-| 2 | 0 | 1 | 0 |
-| 0 | 3 | 2 | 0 |
-| 1 | 1 | 4 | 2 |
+free 2 → shortfall 0 for need 1. free 0 paid 3 → 0 for need 2. free 1 paid 1 need 4 → **2**.
 
 ## planTopup
 
-Enough free → `enough_free`. Enough paid → `enough_paid`. Empty vault → `vault_empty`.
+| State | need | Result |
+| --- | --- | --- |
+| free 5 | 2 | `enough_free` |
+| free 0 paid 2 | 1 | `enough_paid` |
+| empty vault | 1 | `vault_empty` |
+| vault = 3×COST | 1 | ok, calls **1**, waxCost **COST_PER_CALL** |
 
-Vault holds `3 * COST_PER_CALL`, need 1 → ok, `calls` 1, `waxCost` = COST_PER_CALL, unsigned transfer `sent:false`, `to: orng.wax`, memo `deposit`, precision 8.
+Unsent transfer: to `orng.wax`, memo `deposit`, precision 8.
 
 ## ensurePaid
 
-Need 2 with vault `5 * COST` → paidCredits 2, vaultWax `3 * COST`, orngPaidWax `2 * COST`.
+Deposit 5×COST, ensure need 2 → paidCredits **2**, vaultWax **3×COST**, orngPaidWax **2×COST**.
 
-`consumePaid` from 1 → 0; second throws. Zero deposit and bad dapp refused.
+`consumePaid` decrements; empty paid throws. Zero deposit / bad dapp / topup on empty vault refused.
