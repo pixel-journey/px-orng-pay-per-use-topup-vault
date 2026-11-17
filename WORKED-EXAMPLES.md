@@ -22,3 +22,13 @@ Unsent transfer: to `orng.wax`, memo `deposit`, precision 8.
 Deposit 5×COST, ensure need 2 → paidCredits **2**, vaultWax **3×COST**, orngPaidWax **2×COST**.
 
 `consumePaid` decrements; empty paid throws. Zero deposit / bad dapp / topup on empty vault refused.
+
+## Funding order
+
+Do not charge every path for one call:
+
+1. Free credits ([bucket](https://github.com/pixel-journey/px-orng-credit-bucket-monitor))
+2. Paid credits (this lab)
+3. Stake ([auto-stake](https://github.com/pixel-journey/px-orng-auto-wax-stake-manager)) only for remaining shortfall
+
+Memo here is `deposit`. Stake uses memo `stake`. Both stay `sent: false` in these labs.
