@@ -24,4 +24,4 @@
 | [auto-stake](https://github.com/pixel-journey/px-orng-auto-wax-stake-manager) | Memo `stake`, last step |
 | [powerup sponsor](https://github.com/pixel-journey/px-cpu-eosio-powerup-sponsor-pool) | CPU rental, not oracle credits |
 | [v3 starter](https://github.com/pixel-journey/px-orng-v3-randnotify-starter) | Open the job only after the gate |
-| [ORNG path](https://github.com/pixel-journey/px-contract-examples-vault/blob/main/docs/ORNG-LEARNING-PATH.md) | Funding cheatsheet |
+| `px-contract-examples-vault` (private index; not this public course) | Funding cheatsheet |
